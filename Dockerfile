@@ -1,10 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:22.04 AS build-stage
 
+COPY gcc-arm-stm /opt/
+
 # Install tools required for project
 RUN apt update
 RUN apt install -y git
-RUN apt install -y gcc-arm-none-eabi
+#RUN apt install -y gcc-arm-none-eabi
 RUN apt install -y make cmake
 
 # Install keys
@@ -21,7 +23,8 @@ WORKDIR /home
 RUN git clone --branch develop git@github.com:lunii/firmware-fah-wifi.git
 
 # Set environment variables for toolchain
-ENV TOOLCHAIN_PREFIX=/usr/bin/arm-none-eabi-
+#ENV TOOLCHAIN_PREFIX=/usr/bin/arm-none-eabi-
+ENV TOOLCHAIN_PREFIX=/opt/bin/arm-none-eabi-
 ENV CC=$TOOLCHAIN_PREFIX"gcc"
 ENV CXX=$TOOLCHAIN_PREFIX"g++"
 ENV ENV_OBJCOPY=$TOOLCHAIN_PREFIX"objcopy"
