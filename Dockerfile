@@ -31,6 +31,9 @@ ENV SIZE_UTIL=$TOOLCHAIN_PREFIX"size"
 # Build
 WORKDIR /home/firmware-fah-wifi/source/lunii_firmware
 RUN bash build.sh
+WORKDIR /home/firmware-fah-wifi/source/lunii_firmware/build
+RUN cmake -DCMAKE_BUILD_TYPE=Release ..
+RUN make -j 8
 
 # Export the build folder to an empty container to retrieve as output
 FROM scratch as export-stage
